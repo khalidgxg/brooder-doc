@@ -14,7 +14,7 @@ graph TD;
         C -- Valid --> D["Create new user record (inactive)"];
         D --> E["Generate 4-digit OTP"];
         E --> F["Send OTP to user's email"];
-        F --> G["Return success message with OTP expiry time `end_at`"];
+        F --> G["Return success message with OTP expiry time end_at"];
         C -- Invalid --> H["Return validation errors"];
     end
 ```
@@ -60,6 +60,20 @@ This endpoint allows a new user to register as a Customer.
 
 ---
 
+### Code Highlights & Key Concepts
+
+1.  **Database Transactions**: The entire registration process is wrapped in a `DB::transaction()`. This ensures that if any step fails (e.g., saving the user, creating the profile, or uploading a file), the entire operation is rolled back, preventing incomplete or corrupt user data in the database.
+
+2.  **Inactive User Creation**: A new `User` is created with a `null` value for the `email_verified_at` column. This is a crucial security step that marks the account as inactive and prevents login until the email is verified via OTP.
+
+3.  **Polymorphic Profile**: The system creates a generic `Profile` record associated with the `User` to store common information like `first_name` and `last_name`. It then creates a specific `Customer` or `Provider` record for role-specific data. This is a flexible architecture that allows for different user types.
+
+4.  **OTP Generation & Mailing**: An OTP is generated, saved to the `otp_verifications` table with an expiry time, and then immediately sent to the user's email address using a queued `RegistrationOtp` Mailable. Using a queue (`->send()`) ensures that the user doesn't have to wait for the email to be sent before receiving a response from the API.
+
+5.  **Media Handling (Spatie Media Library)**: The code checks if an `avatar` (or other files for providers) is present in the request. If so, it uses the `spatie/laravel-medialibrary` package to attach the uploaded file to the corresponding model (`Profile` for avatar, `Provider` for documents) and assign it to a specific "collection" (e.g., 'avatar', 'commercial_file').
+
+---
+
 ## 2. Provider Registration
 
 This endpoint allows a new user to register as a Provider (Individual or Establishment).
@@ -102,3 +116,13 @@ This endpoint allows a new user to register as a Provider (Individual or Establi
     }
     ```
     -   `end_at`: The timestamp indicating when the OTP for account activation will expire.
+
+### Code Highlights & Key Concepts
+
+This flow shares the same core concepts as Customer Registration (Transactions, Inactive User Creation, OTP, Media Handling). Key differences for Providers include:
+
+1.  **Conditional Logic for Account Type**: The code checks the `account_type`. If it is `establishment`, it saves all establishment-related data, including `establishment_date` and the various required files (`authorization_form`, `commercial_file`, `tax_file`). If the type is `individual`, this data is ignored.
+
+2.  **Default Provider Level**: When a new Provider is created, they are automatically assigned a `ProviderLevel` of 1. This ensures that every new provider starts at a default tier, which can later be upgraded.
+
+3.  **Multiple File Collections**: For establishment providers, the system handles multiple file uploads. It iterates through each array of files (`authorization_form`, `commercial_file`, etc.) and attaches them to the Provider's media library, each in its own distinct collection. This keeps the provider's documents organized and easy to retrieve.
