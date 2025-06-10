@@ -58,9 +58,13 @@ const sidebars: SidebarsConfig = {
           type: 'category',
           label: 'Provider',
           items: [
+            'workflows/provider/setup',
+            'workflows/provider/profile-management',
+            'workflows/provider/skill-management',
+            'workflows/provider/service-management',
+            'workflows/provider/review-management',
             'workflows/provider/customer-creation',
             'workflows/provider/provider-levels',
-            'workflows/provider/setup',
           ],
         },
         {
