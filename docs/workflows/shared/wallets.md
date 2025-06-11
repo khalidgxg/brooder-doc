@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Wallet Management
 
-This workflow describes how a user, either a Customer or a Provider, can retrieve their wallet balance and other related financial metrics.
+This workflow describes how a user, either a Customer or a Provider, can retrieve their wallet balance and other related financial metrics. A user's wallet balance is modified by [Transactions](./transactions) and can be paid out via [Withdrawal Requests](./withdrawal-requests).
 
 ## Endpoint
 
@@ -44,7 +44,7 @@ The response contains a detailed breakdown of the user's wallet.
 | --------------------- | ------- | --------------------------------------------------------------------------------------------------------- |
 | `amount`              | `float` | The current available balance in the user's wallet.                                                       |
 | `pending_amount`      | `float` | The amount that is currently pending and not yet available in the wallet. See calculation logic below.      |
-| `withdrawal_requests` | `float` | The total amount of withdrawal requests that are currently pending.                                       |
+| `withdrawal_requests` | `float` | The total amount of withdrawal requests that are currently pending. See [Withdrawal Requests](./withdrawal-requests) for more. |
 | `total`               | `float` | The total sum of `amount`, `pending_amount`, and `withdrawal_requests`.                                   |
 
 ### Success Response (`200 OK`)
@@ -71,6 +71,6 @@ The response contains a detailed breakdown of the user's wallet.
     2.  Calculating the tax on the platform's profit (15% of the profit).
     3.  Subtracting the platform's profit and the tax from the order's `total_price` to get the provider's net profit for that order.
     The `pending_amount` is the sum of these net profits from all active orders.
-*   **Withdrawal Requests:** The `withdrawal_requests` value is the sum of all withdrawal requests for the user that have a `PENDING` status. This gives the user a clear picture of how much money is in the process of being transferred out of their wallet.
+*   **Withdrawal Requests:** The `withdrawal_requests` value is the sum of all [Withdrawal Requests](./withdrawal-requests) for the user that have a `PENDING` status. This gives the user a clear picture of how much money is in the process of being transferred out of their wallet.
 
 This concludes the documentation for the shared Wallet Management workflow.

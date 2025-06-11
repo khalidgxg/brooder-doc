@@ -1,4 +1,6 @@
-# Skill Management
+# Skill Management (Provider)
+
+This document describes how providers manage their personal list of skills. For a general overview of what skills and categories are, see the [Support: Categories and Skills documentation](../../support/categories-and-skills).
 
 This workflow allows providers to manage the skills associated with their profile. They can list all skills available on the platform and update their personal list of skills.
 

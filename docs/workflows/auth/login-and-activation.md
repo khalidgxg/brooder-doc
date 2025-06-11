@@ -1,6 +1,6 @@
 # Login and Activation
 
-This document outlines the process for user login, account activation, and re-sending the One-Time Password (OTP).
+This document outlines the process for user login, account activation, and re-sending the One-Time Password (OTP). This workflow follows the initial [Registration](./registration) process.
 
 ---
 
@@ -44,7 +44,7 @@ graph LR;
 
 ## 1. Login
 
-This endpoint authenticates a user and returns an access token if the credentials are valid and the account is active.
+This endpoint authenticates a user and returns an access token if the credentials are valid and the account is active. If you have forgotten your password, please see the [Password Management](./password-management) workflow.
 
 -   **Endpoint:** `POST /api/v1/login`
 -   **Method:** `POST`
@@ -84,7 +84,7 @@ Returns user data and an access token.
 
 ## 2. Activate Account
 
-This endpoint activates a user's account using the OTP sent during registration.
+This endpoint activates a user's account using the OTP sent during the [Registration](./registration) process.
 
 -   **Endpoint:** `POST /api/v1/activate-account`
 -   **Method:** `POST`

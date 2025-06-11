@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Transaction History
 
-This workflow allows a user, either a Customer or a Provider, to retrieve a paginated list of their financial transactions.
+This workflow allows a user, either a Customer or a Provider, to retrieve a paginated list of their financial transactions. These transactions reflect all movements of funds within their [Wallet](./wallets), often resulting from actions in the [Order Management](./orders-management) workflow.
 
 ## Endpoint
 

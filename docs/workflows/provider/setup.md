@@ -1,6 +1,6 @@
 # Provider Setup
 
-This workflow is a crucial, one-time process for a new provider after their first login. It allows them to create their initial skill and service in a single, atomic transaction.
+This workflow is a crucial, one-time process for a new provider after their first login. It allows them to create their initial [skill](./skill-management) and [service](./service-management) in a single, atomic transaction.
 
 -   **Endpoint:** `POST /api/v1/provider/setup`
 -   **Authorization:** Bearer Token (Provider)
@@ -58,4 +58,4 @@ The request must contain all the necessary information to create both a skill an
 
 2.  **Transactional Integrity**: The creation of the skill, the service, and the update of the provider's login status are all wrapped in a `DB::transaction()`. This guarantees that a provider will not be left in an inconsistent state (e.g., having a service but no skill, or having their `is_first_login` flag changed without the service being created).
 
-3.  **Action Composition**: The `SetupAction` does not contain the logic for creating skills or services itself. Instead, it acts as a composer, invoking the dedicated `StoreSkillAction` and `StoreServiceAction`. This is a clean design pattern that promotes reusability and separation of concerns.
+3.  **Action Composition**: The `SetupAction` does not contain the logic for creating skills or services itself. Instead, it acts as a composer, invoking the dedicated `StoreSkillAction` and `StoreServiceAction`. This is a clean design pattern that promotes reusability and separation of concerns. For more details on how these work individually, see the [Skill Management](./skill-management) and [Service Management](./service-management) documentation.

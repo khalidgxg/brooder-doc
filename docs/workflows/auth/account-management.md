@@ -6,7 +6,7 @@ This workflow covers actions that a logged-in (authenticated) user can perform t
 
 ## 1. Get Profile
 
-This endpoint fetches the detailed profile of the currently authenticated user.
+This endpoint fetches the detailed profile of the currently authenticated user. For details on how to **update** this information, see the [Provider Profile Management](../provider/profile-management) or [Shared Profile Management](../shared/profile-management) documentation.
 
 -   **Endpoint:** `GET /api/v1/profile`
 -   **Method:** `GET`
@@ -52,7 +52,7 @@ Returns a detailed user object. The shape of the response varies depending on th
 
 ## 2. Update Password
 
-Allows an authenticated user to change their own password.
+Allows an authenticated user to change their own password. This is part of the broader [Password Management](./password-management) workflow.
 
 -   **Endpoint:** `POST /api/v1/update-password`
 -   **Method:** `POST`

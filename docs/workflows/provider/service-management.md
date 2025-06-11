@@ -1,4 +1,6 @@
-# Service Management
+# Service Management (Provider)
+
+This document describes the provider-specific service management workflow. For a general overview, see the [Shared Service Management documentation](../shared/services-management).
 
 This workflow covers the complete lifecycle of a provider's services, including creation, updating, listing, and deletion.
 
@@ -58,7 +60,7 @@ graph TD
 
 ### Core Logic & Key Concepts
 
-1.  **Provider Level Restrictions**: Before creating a service, the action verifies two things against the provider's current level:
+1.  **Provider Level Restrictions**: Before creating a service, the action verifies two things against the provider's current [level](./provider-levels):
     *   **Service Count**: Ensures the provider has not exceeded the maximum number of allowed services.
     *   **Price Cap**: Ensures the service price is not higher than the maximum allowed for their level.
 

@@ -1,4 +1,6 @@
-# Profile Management
+# Profile Management (Provider)
+
+This document describes the provider-specific profile update workflow. For a general overview, see the [Shared Profile Management documentation](../shared/profile-management).
 
 This workflow allows an authenticated provider to update their profile information. The data is distributed across three different tables: `users`, `profiles`, and `providers`.
 

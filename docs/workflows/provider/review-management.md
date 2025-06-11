@@ -1,4 +1,6 @@
-# Review Management
+# Review Management (Provider)
+
+This document describes how providers manage their reviews. For a full overview of the review and reply process, see the [Shared: Review Management documentation](../shared/reviews-management).
 
 This workflow allows providers to view reviews left for them and their services, and to reply to specific reviews.
 

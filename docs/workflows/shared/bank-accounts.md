@@ -1,6 +1,6 @@
 # Bank Accounts
 
-This workflow covers how both Customers and Providers can manage their bank accounts for withdrawals and payments. All endpoints in this workflow require authentication.
+This workflow covers how both Customers and Providers can manage their bank accounts. These accounts are used to receive funds via [Withdrawal Requests](./withdrawal-requests). All endpoints in this workflow require authentication.
 
 ---
 

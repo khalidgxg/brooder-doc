@@ -1,6 +1,6 @@
 # Withdrawal Requests
 
-This workflow outlines the process for Customers and Providers to request withdrawals of their account balance and to cancel pending requests.
+This workflow outlines the process for Customers and Providers to request withdrawals from their [Wallet](./wallets) to their registered [Bank Accounts](./bank-accounts), and to cancel pending requests.
 
 ---
 
