@@ -15,11 +15,11 @@ This endpoint allows a provider to create a new service. The process is comprehe
 ### Process Overview
 
 ```mermaid
-graph TD;
+graph TD
     A["Provider sends POST to /services"] --> B["StoreServiceAction"];
     B --> C{"Start DB Transaction"};
-    C --> D{Provider Level Checks};
-    D -- "Fail" --> E[Error: "Max services/price limit reached"];
+    C --> D{"Provider Level Checks"};
+    D -- "Fail" --> E["Error: 'Max services/price limit reached'"];
     D -- "Pass" --> F["Create `Service` record"];
     F --> G["Handle Media (Main Poster, Gallery, Video)"];
     G --> H["Compose & Run `StoreKeywordAction`"];
@@ -27,10 +27,10 @@ graph TD;
     I -- "Yes" --> J["Compose & Run `StoreUpgradeAction`"];
     I -- "No" --> K{"Commit Transaction"};
     J --> K;
-    K --> L((Success));
+    K --> L(("Success"));
 
     subgraph "On Failure"
-        F --> X(Rollback);
+        F --> X("Rollback");
         G --> X;
         H --> X;
         J --> X;
@@ -79,23 +79,22 @@ This endpoint allows a provider to update an existing service. It handles partia
 ### Process Overview
 
 ```mermaid
-graph TD;
+graph TD
     A["Provider sends PATCH to /services/{id}"] --> B["UpdateServiceAction"];
     B --> C{"Start DB Transaction"};
-    C --> D{Price provided?};
-    D -- "Yes" --> E{Check Price vs Level Limit};
-    E -- "Fail" --> Z[Error];
+    C --> D{"Price provided?"};
+    D -- "Yes" --> E{"Check Price vs Level Limit"};
+    E -- "Fail" --> Z["Error"];
     E -- "Pass" --> F;
     D -- "No" --> F;
-    F["Update `Service` table fields"];
-    F --> G["Handle Media Updates (Poster, Gallery, Video)"];
+    F["Update `Service` table fields"] --> G["Handle Media Updates (Poster, Gallery, Video)"];
     G --> H["Handle Keyword Sync"];
     H --> I["Handle Upgrade Updates/Deletes/Creates"];
     I --> J{"Commit Transaction"};
-    J --> K((Success));
+    J --> K(("Success"));
 
     subgraph "On Failure"
-        F --> X(Rollback);
+        F --> X("Rollback");
         G --> X;
         H --> X;
         I --> X;

@@ -41,7 +41,7 @@ This section details the step-by-step "happy path" of an order.
 
 ### Step 1 (Customer): Create an Order
 
-A customer initiates the process. This is a transactional process that ensures the order is only created if the payment succeeds.
+A customer initiates the process. This is a transactional process that ensures the order is only created if the payment succeeds. For more details on the request body and process, see the [Customer: Order Management documentation](../customer/order-management).
 
 -   **Endpoint:** `POST /api/v1/customer/orders`
 -   **Status Change:** `(None)` -> **`NEW`**
@@ -64,7 +64,7 @@ A customer initiates the process. This is a transactional process that ensures t
 
 ### Step 3 (Customer): Complete the Order & Trigger Financial Settlement
 
-The customer reviews the delivered work and marks the order as complete, which triggers the financial distribution.
+The customer reviews the delivered work and marks the order as complete, which triggers the financial distribution. For a detailed look at the financial settlement process, see the [Customer: Order Management documentation](../customer/order-management).
 
 -   **Endpoint**: `PATCH /api/v1/customer/orders/{id}/status/completed`
 -   **Status Change:** `REVIEWING` -> **`COMPLETED`**

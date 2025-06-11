@@ -71,9 +71,9 @@ const sidebars: SidebarsConfig = {
           type: 'category',
           label: 'Customer',
           items: [
-            'workflows/customer/order-creation',
             'workflows/customer/provider-interactions',
-            'workflows/customer/service-review-creation',
+            'workflows/customer/service-discovery',
+            'workflows/customer/order-management',
           ],
         },
       ],

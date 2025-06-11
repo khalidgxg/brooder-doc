@@ -13,18 +13,18 @@ This workflow is a crucial, one-time process for a new provider after their firs
 The setup process is designed to ensure a provider's profile is populated with at least one skill and service right from the start.
 
 ```mermaid
-graph TD;
-    A["Provider sends POST request to /setup"] --> B{Is `is_first_login` true?};
-    B -- "No" --> C[Error: "Not first time login"];
+graph TD
+    A["Provider sends POST request to /setup"] --> B{"Is `is_first_login` true?"};
+    B -- "No" --> C["Error: 'Not first time login'"];
     B -- "Yes" --> D{"Start Database Transaction"};
     D --> E["Create first Skill"];
     E --> F["Create first Service"];
     F --> G["Set `is_first_login` to false"];
     G --> H{"Commit Transaction"};
-    H --> I((Success));
+    H --> I(("Success"));
 
     subgraph "On Failure"
-        E --> X(Rollback);
+        E --> X("Rollback");
         F --> X;
         G --> X;
     end

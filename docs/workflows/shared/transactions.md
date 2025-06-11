@@ -22,13 +22,13 @@ This endpoint fetches the transaction history for the authenticated user.
 
 ```mermaid
 graph TD
-    A[Start] --> B[Authenticated User Requests Transactions];
-    B --> C{GET /api/v1/transactions};
-    C --> D[Instantiate IndexTransactionAction];
-    D --> E[Get Authenticated User (Customer/Provider)];
-    E --> F[Fetch Paginated List of Transactions for the User];
-    F --> G[Return Paginated Transaction Resource];
-    G --> H[End];
+    A["Start"] --> B["Authenticated User Requests Transactions"];
+    B --> C{"GET /api/v1/transactions"};
+    C --> D["Instantiate IndexTransactionAction"];
+    D --> E["Get Authenticated User (Customer/Provider)"];
+    E --> F["Fetch Paginated List of Transactions for the User"];
+    F --> G["Return Paginated Transaction Resource"];
+    G --> H["End"];
 ```
 
 ## Query Parameters

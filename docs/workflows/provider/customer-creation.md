@@ -13,13 +13,13 @@ This workflow allows a provider to activate the "customer" role for their own ac
 This action is a simple, one-time flag switch and role creation.
 
 ```mermaid
-graph TD;
+graph TD
     A["Provider sends POST to /customers"] --> B["CreateCustomerAccountAction"];
-    B --> C{Is `has_customer_account` true?};
-    C -- "Yes" --> D[Error: "Customer account already exists"];
+    B --> C{"Is `has_customer_account` true?"};
+    C -- "Yes" --> D["Error: 'Customer account already exists'"];
     C -- "No" --> E["Create a `customers` table record linked to this user"];
     E --> F["Set `has_customer_account` flag on `users` table to true"];
-    F --> G((Success: Return updated User object));
+    F --> G(("Success: Return updated User object"));
 ```
 
 ---

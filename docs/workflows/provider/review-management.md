@@ -34,13 +34,13 @@ Allows a provider to post a single public reply to a review they have received.
 
 ### Process Overview
 ```mermaid
-graph TD;
+graph TD
     A["Provider sends POST to /reviews/{id}/reply"] --> B["ReplyToReviewAction"];
     B --> C{"Find Review belonging to Provider"};
-    C --> D{Does Review already have a Reply?};
-    D -- "Yes" --> E[Error: "Already replied"];
+    C --> D{"Does Review already have a Reply?"};
+    D -- "Yes" --> E["Error: 'Already replied'"];
     D -- "No" --> F["Create new `Reply` record linked to Review"];
-    F --> G((Success));
+    F --> G(("Success"));
 ```
 
 ### Request Body

@@ -11,7 +11,7 @@ This workflow details how Customers can review completed orders and how Provider
 ### Customer Endpoints
 
 *   **Create a Review:** `POST /api/v1/orders/{id}/reviews`
-    *   Allows a Customer to submit a review for a completed order.
+    *   Allows a Customer to submit a review for a completed order. See the [Order Management](./orders-management) workflow for details on how an order reaches the `COMPLETED` state.
 *   **List Service Reviews:** `GET /api/v1/services/{id}/reviews`
     *   Fetches all reviews for a specific service.
 *   **List Provider Reviews:** `GET /api/v1/providers/{id}/reviews`
@@ -32,18 +32,18 @@ This workflow details how Customers can review completed orders and how Provider
 
 ```mermaid
 graph TD
-    A[Start] --> B[Customer POSTs to /orders/{id}/reviews];
-    B -- with rate & content --> C[Validate Request];
-    C -- Validation Passes --> D{Find Order by ID};
-    D -- Order Found --> E{Is Order Status 'COMPLETED'?};
-    E -- Yes --> F{Has Order Already Been Reviewed?};
-    F -- No --> G[Create Review Record];
-    G -- Associated with Order, Service, Provider, and User --> H[Return Success Response];
-    H --> Z[End];
+    A["Start"] --> B["Customer POSTs to /orders/{id}/reviews"];
+    B -- "with rate & content" --> C["Validate Request"];
+    C -- "Validation Passes" --> D{"Find Order by ID"};
+    D -- "Order Found" --> E{"Is Order Status 'COMPLETED'?"};
+    E -- "Yes" --> F{"Has Order Already Been Reviewed?"};
+    F -- "No" --> G["Create Review Record"];
+    G -- "Associated with Order, Service, Provider, and User" --> H["Return Success Response"];
+    H --> Z["End"];
 
-    D -- Not Found --> I[Return 404 Not Found];
-    E -- No --> J[Return 404 Not Found];
-    F -- Yes --> K[Throw LogicalException ("Already reviewed")];
+    D -- "Not Found" --> I["Return 404 Not Found"];
+    E -- "No" --> J["Return 404 Not Found"];
+    F -- "Yes" --> K["Throw LogicalException ('Already reviewed')"];
     I --> Z;
     J --> Z;
     K --> Z;
@@ -53,16 +53,16 @@ graph TD
 
 ```mermaid
 graph TD
-    A[Start] --> B[Provider POSTs to /reviews/{id}/reply];
-    B -- with content --> C[Validate Request];
-    C -- Validation Passes --> D{Find Review by ID for this Provider};
-    D -- Review Found --> E{Does Review Already Have a Reply?};
-    E -- No --> F[Create Reply Record];
-    F -- Associated with Review and User --> G[Return Success Response];
-    G --> Z[End];
+    A["Start"] --> B["Provider POSTs to /reviews/{id}/reply"];
+    B -- "with content" --> C["Validate Request"];
+    C -- "Validation Passes" --> D{"Find Review by ID for this Provider"};
+    D -- "Review Found" --> E{"Does Review Already Have a Reply?"};
+    E -- "No" --> F["Create Reply Record"];
+    F -- "Associated with Review and User" --> G["Return Success Response"];
+    G --> Z["End"];
 
-    D -- Not Found --> H[Return 404 Not Found];
-    E -- Yes --> I[Throw LogicalException ("Already replied")];
+    D -- "Not Found" --> H["Return 404 Not Found"];
+    E -- "Yes" --> I["Throw LogicalException ('Already replied')"];
     H --> Z;
     I --> Z;
 ```

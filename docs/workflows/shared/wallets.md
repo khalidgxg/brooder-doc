@@ -22,18 +22,18 @@ This endpoint provides a summary of the user's wallet, including available balan
 
 ```mermaid
 graph TD
-    A[Start] --> B[Authenticated User Requests Wallet Details];
-    B --> C{GET /api/v1/wallets};
-    C --> D[Instantiate DisplayAmountAction];
-    D --> E{Determine User Type (Customer/Provider)};
-    E -- Customer --> F[Calculate Customer's Pending Amount];
-    E -- Provider --> G[Calculate Provider's Pending Amount];
-    F --> H[Get Wallet Balance];
+    A["Start"] --> B["Authenticated User Requests Wallet Details"];
+    B --> C{"GET /api/v1/wallets"};
+    C --> D["Instantiate DisplayAmountAction"];
+    D --> E{"Determine User Type (Customer/Provider)"};
+    E -- "Customer" --> F["Calculate Customer's Pending Amount"];
+    E -- "Provider" --> G["Calculate Provider's Pending Amount"];
+    F --> H["Get Wallet Balance"];
     G --> H;
-    H --> I[Get Pending Withdrawal Requests];
-    I --> J[Calculate Total];
-    J --> K[Return Wallet Summary];
-    K --> L[End];
+    H --> I["Get Pending Withdrawal Requests"];
+    I --> J["Calculate Total"];
+    J --> K["Return Wallet Summary"];
+    K --> L["End"];
 ```
 
 ## Response Body
