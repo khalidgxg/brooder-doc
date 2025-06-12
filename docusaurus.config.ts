@@ -18,12 +18,12 @@ const config: Config = {
   url: 'https://khalidgxg.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/brooder/',
+  baseUrl: '/brooder-doc/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'khalidgxg', // Your GitHub username
-  projectName: 'brooder', // Your repository name
+  projectName: 'brooder-doc', // Your repository name
   deploymentBranch: 'gh-pages', // The branch to deploy to
 
   onBrokenLinks: 'throw',
