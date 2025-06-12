@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkbrooder=self.webpackChunkbrooder||[]).push([[1903],{1912:o=>{o.exports=JSON.parse('{"blogBasePath":"/brooder-doc/blog","blogTitle":"Blog","authorsListPath":"/brooder-doc/blog/authors"}')}}]);
