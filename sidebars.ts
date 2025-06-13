@@ -40,6 +40,18 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: 'category',
+          label: 'Admin',
+          items: [
+            'workflows/admin/provider-management',
+            'workflows/admin/skills-management',
+            'workflows/admin/services-management',
+            'workflows/admin/upgrades-management',
+            'workflows/admin/wallets-management',
+            'workflows/admin/withdrawal-requests-management',
+          ],
+        },
+        {
+          type: 'category',
           label: 'Shared',
           items: [
             'workflows/shared/bank-accounts',
