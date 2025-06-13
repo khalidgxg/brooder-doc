@@ -16,10 +16,10 @@ Administrators play a crucial role in maintaining the quality of services offere
 ```mermaid
 graph TD
     A[Admin] --> B{Service Management};
-    B --> C[GET /api/v1/admin/services<br/>List All Services];
-    B --> D[GET /api/v1/admin/services/{id}<br/>View Service Details];
-    B --> E[PATCH /api/v1/admin/services/{id}/accept<br/>Accept Service];
-    B --> F[PATCH /api/v1/admin/services/{id}/reject<br/>Reject Service];
+    B --> C["GET /api/v1/admin/services<br>List All Services"];
+    B --> D["GET /api/v1/admin/services/{id}<br>View Service Details"];
+    B --> E["PATCH /api/v1/admin/services/{id}/accept<br>Accept Service"];
+    B --> F["PATCH /api/v1/admin/services/{id}/reject<br>Reject Service"];
 ```
 
 ## API Endpoints
@@ -55,4 +55,19 @@ If a service does not meet the platform's standards, admins can reject it.
 
 *   **Endpoint**: `PATCH /api/v1/admin/services/{id}/reject`
 *   **Description**: Rejects a service, preventing it from being listed.
-*   **`{id}`**: The ID of the service to reject. 
+*   **`{id}`**: The ID of the service to reject.
+
+### Core Logic & Key Concepts
+
+1.  **Quality Gatekeeping**: This workflow serves as a critical quality control point. No service submitted by a provider can become public until an administrator explicitly accepts it.
+
+2.  **Status-Driven Visibility**: The `ServiceStatus` enum is central to this process.
+    *   **Default Status**: When a provider submits a new service, it is created with a `PENDING` (`0`) status. It is not visible to customers.
+    *   **Acceptance**: The `ServiceAcceptationAction` updates the service's status to `ACTIVE` (`1`). This makes the service visible and orderable by customers.
+    *   **Rejection**: The `ServiceRejectionAction` updates the status to `REJECTED` (`2`). The service remains hidden from public view.
+
+3.  **Provider Communication**: Clear communication with providers is built into the rejection process.
+    *   When a service is rejected, the system sends a `ServiceRejection` email to the provider.
+    *   This email includes a custom `message` from the administrator, explaining why the service was not approved. This feedback is essential for helping providers meet platform standards.
+
+4.  **Audit Trail**: By changing the status rather than deleting rejected services, the system maintains a complete history of all service submissions and their outcomes. This is useful for administrative review and tracking provider performance. 

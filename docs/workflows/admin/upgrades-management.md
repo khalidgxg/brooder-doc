@@ -16,9 +16,9 @@ Providers may request to upgrade their accounts to a different level or tier. Ad
 ```mermaid
 graph TD
     A[Admin] --> B{Upgrade Management};
-    B --> C[GET /api/v1/admin/upgrades<br/>List Upgrade Requests];
-    B --> D[POST /api/v1/admin/upgrades/{id}/accept<br/>Accept Upgrade];
-    B --> E[POST /api/v1/admin/upgrades/{id}/reject<br/>Reject Upgrade];
+    B --> C["GET /api/v1/admin/upgrades<br>List Upgrade Requests"];
+    B --> D["POST /api/v1/admin/upgrades/{id}/accept<br>Accept Upgrade"];
+    B --> E["POST /api/v1/admin/upgrades/{id}/reject<br>Reject Upgrade"];
 ```
 
 ## API Endpoints
@@ -46,4 +46,15 @@ If a provider does not qualify for an upgrade, the admin can reject the request.
 
 *   **Endpoint**: `POST /api/v1/admin/upgrades/{id}/reject`
 *   **Description**: Rejects a provider's upgrade request.
-*   **`{id}`**: The ID of the upgrade request to reject. 
+*   **`{id}`**: The ID of the upgrade request to reject.
+
+### Core Logic & Key Concepts
+
+1.  **Status-Driven Workflow**: The entire upgrade management process is driven by the `status` field on the `upgrades` table. This field is controlled by the `UpgradeStatus` enum.
+    *   **Default Status**: When a provider requests an upgrade, a new record is created with a default status of `PENDING` (`0`).
+    *   **Acceptance**: The `UpgradeAcceptationAction` changes the status to `ACTIVE` (`1`). This signifies that the provider has been granted the new level or tier.
+    *   **Rejection**: The `UpgradeRejectionAction` changes the status to `REJECTED` (`2`).
+
+2.  **Simplicity of Logic**: The actions for this workflow are intentionally direct. They focus solely on updating the status of the request. There are no complex side effects like sending emails or notifications directly within these actions. The system relies on the status change to trigger any other necessary downstream processes (which are not part of this specific workflow).
+
+3.  **Audit Trail**: By creating a record for each upgrade request and updating its status rather than deleting it, the system maintains a clear and auditable history of all upgrade requests and the decisions made by administrators. This is valuable for tracking provider progression and for reference in case of disputes. 

@@ -16,12 +16,12 @@ Administrators oversee the process of provider withdrawals. They review requests
 ```mermaid
 graph TD
     A[Admin] --> B{Withdrawal Request Management};
-    B --> C[GET /api/v1/admin/withdrawal-requests<br/>List Requests];
+    B --> C["GET /api/v1/admin/withdrawal-requests<br>List Requests"];
     B --> D{Review Request};
     C --> D;
-    D --> E[POST /api/v1/admin/withdrawal-requests/{id}/approve<br/>Approve];
-    D --> F[POST /api/v1/admin/withdrawal-requests/{id}/reject<br/>Reject];
-    E --> G[POST /api/v1/admin/withdrawal-requests/{id}/complete<br/>Mark as Complete];
+    D --> E["POST /api/v1/admin/withdrawal-requests/{id}/approve<br>Approve"];
+    D --> F["POST /api/v1/admin/withdrawal-requests/{id}/reject<br>Reject"];
+    E --> G["POST /api/v1/admin/withdrawal-requests/{id}/complete<br>Mark as Complete"];
 ```
 
 ## API Endpoints
@@ -57,4 +57,21 @@ After the funds have been successfully transferred to the provider's bank accoun
 
 *   **Endpoint**: `POST /api/v1/admin/withdrawal-requests/{id}/complete`
 *   **Description**: Marks a withdrawal request as completed. This is the final step in the process.
-*   **`{id}`**: The ID of the withdrawal request. 
+*   **`{id}`**: The ID of the withdrawal request.
+
+### Core Logic & Key Concepts
+
+1.  **Multi-Stage, Status-Driven Process**: The entire workflow is governed by the `WithdrawalRequestStatus` enum, moving a request through a clear, multi-step process.
+    *   `PENDING` (`0`): The initial state when a user submits a request. The funds have been withdrawn from their wallet and are held by the system.
+    *   `APPROVED` (`1`): An admin has approved the request. The funds are now cleared for external transfer.
+    *   `REJECTED` (`2`): An admin has rejected the request.
+    *   `COMPLETED` (`3`): An admin has confirmed the external funds transfer is done.
+    *   `CANCELED` (`4`): The user has canceled the request.
+
+2.  **Transactional Fund Management**: The system ensures that money is never lost during the process.
+    *   **On Rejection**: The `RejectWithdrawalRequestAction` performs a critical function within a database transaction: it updates the request status to `REJECTED` and immediately deposits the full requested amount *back* into the user's wallet using the `depositFloat` method. This guarantees that a rejected request automatically and safely returns the funds.
+    *   **On Approval/Completion**: The actions for approval and completion only change the status. The actual debiting from the user's wallet happens when the request is first *created*, not when it's approved by an admin.
+
+3.  **Separation of Concerns: Internal vs. External Payouts**: A key concept is the distinction between internal status updates and the real-world bank transfer.
+    *   The "Complete" action (`CompleteWithdrawalRequestAction`) only updates the internal status to `COMPLETED`.
+    *   The `//TODO: Make Payout` comment in the code explicitly states that the actual financial payout to a bank is an external process. The admin first performs the bank transfer and *then* marks the request as complete in the system to finalize the record. This separation prevents the system from automatically sending money without manual oversight. 

@@ -16,11 +16,11 @@ Administrators are responsible for curating the master list of skills that provi
 ```mermaid
 graph TD
     A[Admin] --> B{Skills Management};
-    B --> C[GET /api/v1/admin/skills<br/>List All Skills];
-    B --> D[POST /api/v1/admin/skills<br/>Create New Skill];
-    B --> E[PATCH /api/v1/admin/skills/{id}<br/>Update Skill];
-    B --> F[POST /api/v1/admin/skills/{id}/activate<br/>Activate Skill];
-    B --> G[POST /api/v1/admin/skills/{id}/deactivate<br/>Deactivate Skill];
+    B --> C["GET /api/v1/admin/skills<br>List All Skills"];
+    B --> D["POST /api/v1/admin/skills<br>Create New Skill"];
+    B --> E["PATCH /api/v1/admin/skills/{id}<br>Update Skill"];
+    B --> F["POST /api/v1/admin/skills/{id}/activate<br>Activate Skill"];
+    B --> G["POST /api/v1/admin/skills/{id}/deactivate<br>Deactivate Skill"];
 ```
 
 ## API Endpoints
@@ -63,4 +63,14 @@ Admins can deactivate a skill, making it unavailable for new provider profiles o
 
 *   **Endpoint**: `POST /api/v1/admin/skills/{id}/deactivate`
 *   **Description**: Deactivates a specific skill.
-*   **`{id}`**: The ID of the skill to deactivate. 
+*   **`{id}`**: The ID of the skill to deactivate.
+
+### Core Logic & Key Concepts
+
+1.  **Centralized Skill Repository**: Unlike provider-specific skills, this workflow manages a global, master list of all skills available on the platform. The `skills` table acts as a single source of truth.
+
+2.  **`is_active` Flag**: The visibility and availability of skills are controlled by a boolean `is_active` flag in the `skills` table.
+    *   **Activation**: The `ActivateSkillsAction` sets `is_active` to `true`. This makes the skill visible across the platform, allowing providers to add it to their profiles.
+    *   **Deactivation**: The `DeactivateSkillsAction` sets `is_active` to `false`. The skill is not deleted, but it is hidden from view and cannot be newly associated with any providers or services. It is effectively "soft-deleted".
+
+3.  **Data Integrity**: By deactivating skills instead of deleting them, the system maintains historical data integrity. Providers who already have the skill associated with their profile will retain it, preventing data inconsistencies or errors in existing user profiles and services. This approach ensures that past records remain accurate. 
