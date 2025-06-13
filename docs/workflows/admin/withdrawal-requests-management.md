@@ -69,7 +69,7 @@ After the funds have been successfully transferred to the provider's bank accoun
     *   `CANCELED` (`4`): The user has canceled the request.
 
 2.  **Transactional Fund Management**: The system ensures that money is never lost during the process.
-    *   **On Rejection**: The `RejectWithdrawalRequestAction` performs a critical function within a database transaction: it updates the request status to `REJECTED` and immediately deposits the full requested amount *back* into the user's wallet using the `depositFloat` method. This guarantees that a rejected request automatically and safely returns the funds.
+    *   **On Rejection**: The `RejectWithdrawalRequestAction` performs a critical function within a database transaction: it updates the request status to `REJECTED` and immediately deposits the full requested amount *back* into the user's wallet using the `depositFloat` method. This guarantees that a rejected request automatically and safely returns the funds. For more details on how the wallet system works, see the [Wallets Management (Admin)](./wallets-management.md) documentation.
     *   **On Approval/Completion**: The actions for approval and completion only change the status. The actual debiting from the user's wallet happens when the request is first *created*, not when it's approved by an admin.
 
 3.  **Separation of Concerns: Internal vs. External Payouts**: A key concept is the distinction between internal status updates and the real-world bank transfer.
