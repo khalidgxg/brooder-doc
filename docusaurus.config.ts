@@ -92,7 +92,7 @@ const config: Config = {
           items: [
             {
               label: 'Workflows',
-              to: '/docs/workflows',
+              to: '/docs/workflows/auth/registration',
             },
           ],
         },
