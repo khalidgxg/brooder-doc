@@ -34,12 +34,65 @@ Admins can retrieve a list of all skills available on the platform, including th
 *   **Endpoint**: `GET /api/v1/admin/skills`
 *   **Description**: Returns a paginated list of all skills.
 
+**Example Response**
+
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "name": "Graphic Design",
+            "is_active": true
+        },
+        {
+            "id": 2,
+            "name": "Content Writing",
+            "is_active": false
+        }
+    ],
+    "links": {
+        "first": "/api/v1/admin/skills?page=1",
+        "last": "/api/v1/admin/skills?page=5",
+        "prev": null,
+        "next": "/api/v1/admin/skills?page=2"
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 5,
+        "path": "/api/v1/admin/skills",
+        "per_page": 15,
+        "to": 15,
+        "total": 75
+    }
+}
+```
+
 ### 2. Create a Skill
 
 Admins can add a new skill to the platform.
 
 *   **Endpoint**: `POST /api/v1/admin/skills`
 *   **Description**: Creates a new skill. The request body should contain the skill's name and any other required attributes.
+
+**Request Body**
+
+| Field  | Type   | Rules                                                    |
+|--------|--------|----------------------------------------------------------|
+| `name` | string | `required`, `string`, `min:2`, `max:50`, `unique:skills` |
+
+**Example Response**
+
+```json
+{
+    "message": "Data created successfully.",
+    "data": {
+        "id": 3,
+        "name": "Digital Marketing",
+        "is_active": true
+    }
+}
+```
 
 ### 3. Update a Skill
 
@@ -49,6 +102,25 @@ Admins can change the details of an existing skill.
 *   **Description**: Updates the specified skill.
 *   **`{id}`**: The ID of the skill to update.
 
+**Request Body**
+
+| Field  | Type   | Rules                                                                  |
+|--------|--------|------------------------------------------------------------------------|
+| `name` | string | `required`, `string`, `min:2`, `max:50`, `unique:skills (ignores self)` |
+
+**Example Response**
+
+```json
+{
+    "message": "Data updated successfully.",
+    "data": {
+        "id": 2,
+        "name": "Advanced Content Writing",
+        "is_active": false
+    }
+}
+```
+
 ### 4. Activate a Skill
 
 Admins can make a skill "active," which means it will be visible and available for providers to add to their profiles.
@@ -57,6 +129,14 @@ Admins can make a skill "active," which means it will be visible and available f
 *   **Description**: Activates a specific skill.
 *   **`{id}`**: The ID of the skill to activate.
 
+**Example Response**
+
+```json
+{
+    "message": "Data activated successfully."
+}
+```
+
 ### 5. Deactivate a Skill
 
 Admins can deactivate a skill, making it unavailable for new provider profiles or services.
@@ -64,6 +144,14 @@ Admins can deactivate a skill, making it unavailable for new provider profiles o
 *   **Endpoint**: `POST /api/v1/admin/skills/{id}/deactivate`
 *   **Description**: Deactivates a specific skill.
 *   **`{id}`**: The ID of the skill to deactivate.
+
+**Example Response**
+
+```json
+{
+    "message": "Data deactivated successfully."
+}
+```
 
 ### Core Logic & Key Concepts
 

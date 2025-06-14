@@ -35,6 +35,37 @@ Admins can view all withdrawal requests to see what needs to be processed.
 *   **Endpoint**: `GET /api/v1/admin/withdrawal-requests`
 *   **Description**: Returns a paginated list of all withdrawal requests.
 
+**Example Response**
+
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "user_id": 12,
+            "amount": "250.00",
+            "status": "Pending",
+            "requested_at": "2023-10-27T14:00:00.000000Z"
+        }
+    ],
+    "links": {
+        "first": "/api/v1/admin/withdrawal-requests?page=1",
+        "last": "/api/v1/admin/withdrawal-requests?page=2",
+        "prev": null,
+        "next": "/api/v1/admin/withdrawal-requests?page=2"
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 2,
+        "path": "/api/v1/admin/withdrawal-requests",
+        "per_page": 15,
+        "to": 15,
+        "total": 30
+    }
+}
+```
+
 ### 2. Approve a Withdrawal Request
 
 Admins can approve a request, confirming that the provider is eligible to withdraw the requested amount.
@@ -42,6 +73,14 @@ Admins can approve a request, confirming that the provider is eligible to withdr
 *   **Endpoint**: `POST /api/v1/admin/withdrawal-requests/{id}/approve`
 *   **Description**: Approves a specific withdrawal request.
 *   **`{id}`**: The ID of the withdrawal request.
+
+**Example Response**
+
+```json
+{
+    "message": "Data updated successfully."
+}
+```
 
 ### 3. Reject a Withdrawal Request
 
@@ -51,6 +90,14 @@ Admins can reject a request if there is an issue (e.g., insufficient funds, susp
 *   **Description**: Rejects a specific withdrawal request.
 *   **`{id}`**: The ID of the withdrawal request.
 
+**Example Response**
+
+```json
+{
+    "message": "Data updated successfully."
+}
+```
+
 ### 4. Complete a Withdrawal Request
 
 After the funds have been successfully transferred to the provider's bank account externally, the admin marks the request as complete in the system.
@@ -58,6 +105,14 @@ After the funds have been successfully transferred to the provider's bank accoun
 *   **Endpoint**: `POST /api/v1/admin/withdrawal-requests/{id}/complete`
 *   **Description**: Marks a withdrawal request as completed. This is the final step in the process.
 *   **`{id}`**: The ID of the withdrawal request.
+
+**Example Response**
+
+```json
+{
+    "message": "Data updated successfully."
+}
+```
 
 ### Core Logic & Key Concepts
 

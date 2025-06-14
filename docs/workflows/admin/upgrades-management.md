@@ -32,6 +32,36 @@ Admins can view all pending and past upgrade requests from providers.
 *   **Endpoint**: `GET /api/v1/admin/upgrades`
 *   **Description**: Returns a paginated list of all provider upgrade requests.
 
+**Example Response**
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "provider_id": 12,
+            "level": "Pro",
+            "status": "Pending",
+            "requested_at": "2023-10-27T18:00:00.000000Z"
+        }
+    ],
+    "links": {
+        "first": "/api/v1/admin/upgrades?page=1",
+        "last": "/api/v1/admin/upgrades?page=1",
+        "prev": null,
+        "next": null
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 1,
+        "path": "/api/v1/admin/upgrades",
+        "per_page": 15,
+        "to": 1,
+        "total": 1
+    }
+}
+```
+
 ### 2. Accept an Upgrade Request
 
 Admins can approve a provider's request to upgrade their account level.
@@ -40,6 +70,13 @@ Admins can approve a provider's request to upgrade their account level.
 *   **Description**: Accepts a provider's upgrade request.
 *   **`{id}`**: The ID of the upgrade request to accept.
 
+**Example Response**
+```json
+{
+    "message": "Data updated successfully."
+}
+```
+
 ### 3. Reject an Upgrade Request
 
 If a provider does not qualify for an upgrade, the admin can reject the request.
@@ -47,6 +84,13 @@ If a provider does not qualify for an upgrade, the admin can reject the request.
 *   **Endpoint**: `POST /api/v1/admin/upgrades/{id}/reject`
 *   **Description**: Rejects a provider's upgrade request.
 *   **`{id}`**: The ID of the upgrade request to reject.
+
+**Example Response**
+```json
+{
+    "message": "Data updated successfully."
+}
+```
 
 ### Core Logic & Key Concepts
 

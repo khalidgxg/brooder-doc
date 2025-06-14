@@ -34,6 +34,37 @@ Admins can retrieve a list of all providers, which is useful for seeing pending 
 *   **Endpoint**: `GET /api/v1/admin/providers`
 *   **Description**: Returns a paginated list of all providers.
 
+**Example Response**
+
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "name": "John Doe",
+            "email": "john.doe@example.com",
+            "status": "Pending",
+            "created_at": "2023-10-27T10:00:00.000000Z"
+        }
+    ],
+    "links": {
+        "first": "/api/v1/admin/providers?page=1",
+        "last": "/api/v1/admin/providers?page=3",
+        "prev": null,
+        "next": "/api/v1/admin/providers?page=2"
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 3,
+        "path": "/api/v1/admin/providers",
+        "per_page": 15,
+        "to": 15,
+        "total": 45
+    }
+}
+```
+
 ### 2. Show Provider Profile
 
 Admins can view the detailed profile of a specific provider.
@@ -41,6 +72,27 @@ Admins can view the detailed profile of a specific provider.
 *   **Endpoint**: `GET /api/v1/admin/providers/{id}`
 *   **Description**: Retrieves the full profile for a single provider.
 *   **`{id}`**: The ID of the provider.
+
+**Example Response**
+
+```json
+{
+    "data": {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john.doe@example.com",
+        "phone": "123-456-7890",
+        "status": "Pending",
+        "level": "Newbie",
+        "rating": 0,
+        "skills": [
+            "Graphic Design",
+            "Web Development"
+        ],
+        "created_at": "2023-10-27T10:00:00.000000Z"
+    }
+}
+```
 
 ### 3. Accept a Provider
 
@@ -50,6 +102,14 @@ Admins can accept a provider's application, allowing them to offer services on t
 *   **Description**: Marks a provider's account as accepted.
 *   **`{id}`**: The ID of the provider to accept.
 
+**Example Response**
+
+```json
+{
+    "message": "Data updated successfully."
+}
+```
+
 ### 4. Reject a Provider
 
 Admins can reject a provider's application.
@@ -58,6 +118,20 @@ Admins can reject a provider's application.
 *   **Description**: Rejects a provider's application.
 *   **`{id}`**: The ID of the provider to reject.
 
+**Request Body**
+
+| Field     | Type   | Rules                           |
+|-----------|--------|---------------------------------|
+| `message` | string | `required`, `string`, `max:500` |
+
+**Example Response**
+
+```json
+{
+    "message": "Data updated successfully."
+}
+```
+
 ### 5. Charge a Provider's Wallet
 
 Admins can manually add funds to a provider's wallet.
@@ -65,6 +139,23 @@ Admins can manually add funds to a provider's wallet.
 *   **Endpoint**: `POST /api/v1/admin/providers/{id}/wallets/charge`
 *   **Description**: Charges (adds funds to) a specific provider's wallet.
 *   **`{id}`**: The ID of the provider whose wallet is to be charged.
+
+**Request Body**
+
+| Field    | Type    | Rules                         |
+|----------|---------|-------------------------------|
+| `amount` | numeric | `required`, `numeric`, `min:1`|
+
+**Example Response**
+
+```json
+{
+    "message": "Balance deposited successfully.",
+    "data": {
+        "balance": "1100.50"
+    }
+}
+```
 
 ### Core Logic & Key Concepts
 

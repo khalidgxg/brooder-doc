@@ -32,6 +32,21 @@ Admins can add a specified amount to a customer's wallet.
 *   **Description**: Adds funds to a specific customer's wallet. The request body must contain the amount to be added.
 *   **`{id}`**: The ID of the customer.
 
+**Request Body**
+| Field    | Type    | Rules                         |
+|----------|---------|-------------------------------|
+| `amount` | numeric | `required`, `numeric`, `min:1`|
+
+**Example Response**
+```json
+{
+    "message": "Balance deposited successfully.",
+    "data": {
+        "balance": "250.00"
+    }
+}
+```
+
 ### 2. Charge a Provider's Wallet
 
 Admins can add a specified amount to a provider's wallet.
@@ -39,6 +54,21 @@ Admins can add a specified amount to a provider's wallet.
 *   **Endpoint**: `POST /api/v1/admin/providers/{id}/wallets/charge`
 *   **Description**: Adds funds to a specific provider's wallet. The request body must contain the amount to be added.
 *   **`{id}`**: The ID of the provider.
+
+**Request Body**
+| Field    | Type    | Rules                         |
+|----------|---------|-------------------------------|
+| `amount` | numeric | `required`, `numeric`, `min:1`|
+
+**Example Response**
+```json
+{
+    "message": "Balance deposited successfully.",
+    "data": {
+        "balance": "1100.50"
+    }
+}
+```
 
 ### Core Logic & Key Concepts
 
