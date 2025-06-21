@@ -54,8 +54,10 @@ const sidebars: SidebarsConfig = {
           type: 'category',
           label: 'Shared',
           items: [
+            'workflows/shared/service-order-flow',
             'workflows/shared/bank-accounts',
             'workflows/shared/orders-management',
+            'workflows/shared/service-delivery-management',
             'workflows/shared/profile-management',
             'workflows/shared/reviews-management',
             'workflows/shared/services-management',
